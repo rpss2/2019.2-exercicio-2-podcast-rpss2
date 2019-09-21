@@ -28,12 +28,15 @@ class MainActivity : AppCompatActivity() {
                 val xml = URL(url).readText()
                 // Realizando o parse dos arquivos da URL
                 podcasts = Parser.parse(xml)
+
+                database.ItemFeedDAO().pushList(podcasts)
+            } catch (e: Throwable) {
+                Log.e("Dale deu Erro: ", e.message.toString())
+                podcasts = database.ItemFeedDAO().getAll()
+            } finally {
                 uiThread {
                     listFeed.adapter = ItemFeedCustomAdapter(podcasts, this@MainActivity)
                 }
-//                database.ItemFeedDAO().pushList(podcasts)
-            } catch (e: Throwable) {
-                Log.e("Dale deu Erro: ", e.message.toString())
             }
         }
     }
