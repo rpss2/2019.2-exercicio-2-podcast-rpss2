@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         // Declarando lista de objetos do tipo ItemFeed
         var podcasts : List<ItemFeed> = emptyList()
         listFeed.layoutManager = LinearLayoutManager(this)
+        val database = ItemFeedDB.getDatabase(this)
 
         doAsync {
             try {
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
                 uiThread {
                     listFeed.adapter = ItemFeedCustomAdapter(podcasts, this@MainActivity)
                 }
+//                database.ItemFeedDAO().pushList(podcasts)
             } catch (e: Throwable) {
                 Log.e("Dale deu Erro: ", e.message.toString())
             }
